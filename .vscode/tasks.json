@@ -4,7 +4,7 @@
         {
             "label": "Build 8051 Project (SDCC)",
             "type": "shell",
-            "command": "if (!(Test-Path build)) { New-Item -ItemType Directory build }; $files = (Get-ChildItem src\\*.c | ForEach-Object { $_.FullName }); sdcc -mmcs51 --model-small --debug -I'C:\\Program Files\\sdcc\\include' -L'C:\\Program Files\\sdcc\\lib' --xram-size 2048 --iram-size 256 --code-size 65536 --out-fmt-ihx $files -o build\\output.ihx; Get-Content build\\output.ihx | packihx | Out-File -FilePath build\\output.hex -Encoding ascii",
+            "command": "if (!(Test-Path build)) { New-Item -ItemType Directory build }; $files = (Get-ChildItem src\\*.c | ForEach-Object { $_.FullName }); sdcc -mmcs51 ${input:memoryModel} --debug -I'C:\\Program Files\\sdcc\\include' -L'C:\\Program Files\\sdcc\\lib' --xram-size ${input:xramSize} --iram-size ${input:iramSize} --code-size ${input:codeSize} --out-fmt-ihx $files -o build\\output.ihx; Get-Content build\\output.ihx | packihx | Out-File -FilePath build\\output.hex -Encoding ascii",
             "options": {
                 "shell": {
                     "executable": "powershell.exe",
@@ -27,6 +27,76 @@
                 "showReuseMessage": false,
                 "clear": true
             }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "memoryModel",
+            "type": "pickString",
+            "description": "Select Memory Model:",
+            "default": "--model-small",
+            "options": [
+                {
+                    "label": "Small (Variables in IRAM, default)",
+                    "value": "--model-small"
+                },
+                {
+                    "label": "Medium (Variables in PRAM)",
+                    "value": "--model-medium"
+                },
+                {
+                    "label": "Large (Variables in XRAM)",
+                    "value": "--model-large"
+                }
+            ]
+        },
+        {
+            "id": "iramSize",
+            "type": "pickString",
+            "description": "Select Internal RAM (IRAM) Size:",
+            "default": "256",
+            "options": [
+                "128",
+                "256"
+            ]
+        },
+        {
+            "id": "xramSize",
+            "type": "pickString",
+            "description": "Select External RAM (XRAM) Size:",
+            "default": "2048",
+            "options": [
+                "0",
+                "256",
+                "1024",
+                "2048",
+                "4096",
+                "8192"
+            ]
+        },
+        {
+            "id": "codeSize",
+            "type": "pickString",
+            "description": "Select Maximum Code Size (ROM):",
+            "default": "65536",
+            "options": [
+                {
+                    "label": "8 KB",
+                    "value": "8192"
+                },
+                {
+                    "label": "16 KB",
+                    "value": "16384"
+                },
+                {
+                    "label": "32 KB",
+                    "value": "32768"
+                },
+                {
+                    "label": "64 KB",
+                    "value": "65536"
+                }
+            ]
         }
     ]
 }
