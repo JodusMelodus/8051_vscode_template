@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build 8051 Project (SDCC)",
+            "type": "shell",
+            "command": "if (!(Test-Path build)) { New-Item -ItemType Directory build }; $files = (Get-ChildItem src\\*.c | ForEach-Object { $_.FullName }); sdcc -mmcs51 --model-small --debug -I'C:\\Program Files\\sdcc\\include' -L'C:\\Program Files\\sdcc\\lib' --xram-size 2048 --iram-size 256 --code-size 65536 --out-fmt-ihx $files -o build\\output.ihx; Get-Content build\\output.ihx | packihx | Out-File -FilePath build\\output.hex -Encoding ascii",
+            "options": {
+                "shell": {
+                    "executable": "powershell.exe",
+                    "args": [
+                        "-NoProfile",
+                        "-Command"
+                    ]
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
+        }
+    ]
+}

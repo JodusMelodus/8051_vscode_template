@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Program Files/sdcc/include",
+                "C:/c_libraries"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "__SDCC=1",
+                "__sfr=char",
+                "__sbit=char",
+                "__at(x)="
+            ],
+            "compilerPath": "C:/Program Files/sdcc/bin/sdcc.exe",
+            "cStandard": "c11",
+            "intelliSenseMode": "windows-gcc-x86"
+        }
+    ],
+    "version": 4
+}
