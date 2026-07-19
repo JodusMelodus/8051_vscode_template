@@ -14,7 +14,8 @@
                 "__SDCC=1",
                 "__sfr=char",
                 "__sbit=char",
-                "__at(x)="
+                "__at(x)=",
+                "__interrupt(x)="
             ],
             "compilerPath": "C:/Program Files/sdcc/bin/sdcc.exe",
             "cStandard": "c11",
